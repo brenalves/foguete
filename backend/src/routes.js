@@ -2,8 +2,9 @@ const { Router } = require("express");
 
 const router = Router();
 
-router.get("/", (req, res) => {
-    res.json({ message: "Hello World" });
-});
+const userController = require("./controllers/userController");
+
+router.post("/user/create", userController.create);
+router.get("/user/", userController.get);
 
 module.exports = router;
