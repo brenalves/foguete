@@ -8,6 +8,6 @@ const router = Router();
 router.post('/register', clientController.createUser);
 router.post('/login', clientController.loginUser);
 router.get('/', authenticateToken, clientController.getLoggedUser);
-router.delete('/logout', authenticateToken, clientController.logoutUser);
+router.delete('/logout', clientController.logoutUser);
 
 module.exports = router;

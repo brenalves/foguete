@@ -31,7 +31,7 @@ const loginUser = async (req, res) => {
     const { email, password } = req.body;
     try {
         const result = await db.query(
-            'SELECT id, password FROM client WHERE email = $1',
+            'SELECT id, password, admin FROM client WHERE email = $1',
             [email]
         );
         if (result.rows.length === 0) {
@@ -44,7 +44,7 @@ const loginUser = async (req, res) => {
             return res.status(401).json({ error: 'Email ou senha inválidos' });
         }
 
-        const token = jwt.sign({ id: result.rows[0].id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: result.rows[0].id, admin: result.rows[0].admin }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
         res.cookie('token', token, {
             httpOnly: true,
@@ -65,7 +65,7 @@ const getLoggedUser = async (req, res) => {
 
     try {
         const result = await db.query(
-            'SELECT id, name, email FROM client WHERE id = $1',
+            'SELECT id, name, email, admin FROM client WHERE id = $1',
             [user.id]
         );
 

@@ -34,7 +34,8 @@ p, span, a, label, button, select, input {
 }
 
 .btn-alt:hover {
-  background-color: #f0f0f0;
+  background-color: #4a90e2;
+  color: white;
 }
 
 a {
