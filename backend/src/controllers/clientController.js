@@ -16,7 +16,7 @@ const createUser = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const result = await db.query(
+        await db.query(
             'INSERT INTO client (name, email, password) VALUES ($1, $2, $3)',
             [name, email, hashedPassword]
         );
@@ -46,6 +46,13 @@ const loginUser = async (req, res) => {
 
         const token = jwt.sign({ id: result.rows[0].id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: false,
+            sameSite: 'lax',
+            maxAge: 3600000 // 1 hour
+        });
+
         res.status(200).json({ token });
     } catch (error) {
         console.error(error);
@@ -53,7 +60,34 @@ const loginUser = async (req, res) => {
     }
 }
 
+const getLoggedUser = async (req, res) => {
+    const { user } = req;
+
+    try {
+        const result = await db.query(
+            'SELECT id, name, email FROM client WHERE id = $1',
+            [user.id]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Usuário não encontrado' });
+        }
+
+        res.status(200).json(result.rows[0]);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Erro interno do servidor' });
+    }
+}
+
+const logoutUser = (req, res) => {
+    res.clearCookie('token');
+    res.status(200).json({ message: 'Logout successful' });
+}
+
 module.exports = {
     createUser,
-    loginUser
+    loginUser,
+    getLoggedUser,
+    logoutUser
 };

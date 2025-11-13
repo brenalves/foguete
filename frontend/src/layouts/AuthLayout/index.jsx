@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 import './style.css';
 
@@ -7,7 +7,7 @@ export default function AuthLayout() {
     return (
         <div className="auth-layout">
             <header>
-                <h2>Foguete</h2>
+                <Link to="/" className='title'>Foguete</Link>
             </header>
             <main>
                 <Outlet />

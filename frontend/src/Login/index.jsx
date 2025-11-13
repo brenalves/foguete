@@ -14,16 +14,23 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const response = await api.post('/client/login', {
-            email,
-            password
-        });
+        try {
+            const response = await api.post('/api/client/login', {
+                email,
+                password
+            });
 
-        if (response.status !== 200) {
+            if (response.status === 200) {
+                console.log('Login successful');
+                navigate('/');
+            }
+
+        } catch (error) {
+            console.error('Error during login:', error);
 
             const errorDiv = document.querySelector('.error');
             errorDiv.classList.remove('hidden');
-            errorDiv.children[0].innerText = response.data.error || 'Email ou senha inválidos';
+            errorDiv.children[0].innerText = error.response.data.error || 'Email ou senha inválidos';
 
             setTimeout(() => {
                 errorDiv.classList.add('hidden');
@@ -34,8 +41,6 @@ export default function Login() {
             setPassword('');
             return;
         }
-
-        navigate('/');
     }
 
     return (
@@ -52,7 +57,7 @@ export default function Login() {
                 </div>
                 <div className="actions">
                     <div className='forgot-password-div'>
-                        <Link href="/forgot-password">Esqueceu a senha?</Link>
+                        <Link to="/forgot-password">Esqueceu a senha?</Link>
                     </div>
                     <div>
                         <button className='button' type="submit">Entrar</button>

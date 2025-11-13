@@ -32,13 +32,14 @@ export default function Register() {
         }
 
         try {
-            const response = await api.post('/client/register', {
+            const response = await api.post('/api/client/register', {
                 name,
                 email,
                 password
             });
 
-            navigate('/login');
+            if(response.status === 201)
+                navigate('/login');
             
         } catch (error) {
             console.error(error);

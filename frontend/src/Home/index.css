@@ -1,0 +1,44 @@
+.home header {
+    width: 100%;
+    height: 4rem;
+    background-color: #4a90e2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding: 0 1rem;
+    margin-bottom: 1rem;
+}
+
+.home header h2 {
+    color: white;
+    user-select: none;
+}
+
+.home header ul {
+    justify-self: center;
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.home header ul li a {
+    color: white;
+    cursor: pointer;
+    transition: color 0.3s;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.home header ul li a:hover {
+    color: #affcd2;
+}
+
+.home header .button {
+    width: auto;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+}

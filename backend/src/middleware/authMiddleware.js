@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
-const verifyToken = (req, res, next) => {
-    const { token } = req.cookies;
+const authenticateToken = (req, res, next) => {
+    const { token } = req.cookies || {};
     
     if (!token) {
         return res.status(401).json({ error: 'Access denied. No token provided.' });
@@ -17,5 +17,5 @@ const verifyToken = (req, res, next) => {
 }
 
 module.exports = {
-    authenticateToken: verifyToken
+    authenticateToken
 }

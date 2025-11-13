@@ -8,7 +8,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Open Sans', sans-serif;
 }
 
-p, span, a, label {
+p, span, a, label, button, select, input {
   font-family: 'Roboto', sans-serif;
 }
 
@@ -25,6 +25,16 @@ p, span, a, label {
 
 .button:hover {
   background-color: #357abd;
+}
+
+.btn-alt {
+  background-color: white;
+  color: #4a90e2;
+  border: 2px solid #4a90e2;
+}
+
+.btn-alt:hover {
+  background-color: #f0f0f0;
 }
 
 a {
