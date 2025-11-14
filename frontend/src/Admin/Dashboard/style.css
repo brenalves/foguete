@@ -84,16 +84,27 @@
 
 .admin-dashboard .admin-content .analytics-dashboard {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
     margin-bottom: 3rem;
 }
 
-.admin-dashboard .admin-content .analytics-cards {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-    margin-bottom: 3rem;
+.admin-dashboard .admin-content .analytics-card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.admin-dashboard .admin-content .analytics-card.infos {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.admin-dashboard .admin-content .info p {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #4a90e2;
 }
 
 .admin-dashboard .admin-content .section-header {
@@ -114,7 +125,7 @@
     gap: 1rem;
 }
 
-.admin-dashboard .admin-content .section-header .actions button.add-product-button {
+.admin-dashboard .admin-content .section-header .actions .add-product-button {
     background-color: #4a90e2;
     color: white;
     border: none;
@@ -126,9 +137,10 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    text-decoration: none;
 }
 
-.admin-dashboard .admin-content .section-header .actions button.add-product-button:hover {
+.admin-dashboard .admin-content .section-header .actions .add-product-button:hover {
     background-color: #357ABD;
 }
 
@@ -253,6 +265,7 @@
     outline: none;
     font-size: 1rem;
     color: #333;
+    background-color: #fff;
 }
 
 .admin-dashboard .admin-content .filter .filter-content select:focus,

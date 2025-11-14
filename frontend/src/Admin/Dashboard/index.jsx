@@ -1,10 +1,12 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
-import { useUser } from '../../userContext';
+import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 
 import axios from '../../axios.config';
+
+import { useUser } from '../../userContext';
 
 import './style.css';
 
@@ -14,18 +16,12 @@ import { FaSearch, FaPlus, FaPen, FaTrash } from 'react-icons/fa';
 export default function AdminDashboard() {
     const navigate = useNavigate();
 
-    const { user, setUser } = useUser();
+    const { setUser } = useUser();
 
     const [activeTab, setActiveTab] = React.useState('products');
     const [products, setProducts] = React.useState([]);
-    const [sales, setSales] = React.useState([]);
 
     useEffect(() => {
-        console.log('User data:', user);
-        if (!user || user.admin !== true) {
-            navigate('/');
-        }
-
         const fetchAdminData = async () => {
             try {
                 setProducts([
@@ -130,15 +126,6 @@ export default function AdminDashboard() {
                         photoUrl: 'https://via.placeholder.com/50'
                     }
                 ]);
-                // const productsResponse = await axios.get('/api/admin/products', {
-                //     withCredentials: true
-                // });
-                // setProducts(productsResponse.data);
-
-                // const salesResponse = await axios.get('/api/admin/sales', {
-                //     withCredentials: true
-                // });
-                // setSales(salesResponse.data);
 
             } catch (error) {
                 console.error('Error fetching admin data:', error);
@@ -146,7 +133,7 @@ export default function AdminDashboard() {
         };
 
         fetchAdminData();
-    }, [user, navigate]);
+    }, []);
 
     const handleLogout = async () => {
         try {
@@ -200,25 +187,98 @@ export default function AdminDashboard() {
                         <h1 className='title'>Gerenciamento de Produtos</h1>
                         <div className="content">
                             <div className="analytics-dashboard">
-                                <div className="analytics-card">
-                                    <h3>Total de Produtos</h3>
-                                    <p>{products.length}</p>
+                                <div className="infos analytics-card">
+                                    <div className="info total-products">
+                                        <h3>Total de Produtos</h3>
+                                        <p>{products.length}</p>
+                                    </div>
+                                    <div className="info total-stock">
+                                        <h3>Total em Estoque</h3>
+                                        <p>{products.reduce((acc, p) => acc + p.stock, 0)}</p>
+                                    </div>
+                                    <div className="info avg-price">
+                                        <h3>Preço Médio</h3>
+                                        <p>R${(products.reduce((acc, p) => acc + p.price, 0) / products.length).toFixed(2)}</p>
+                                    </div>
                                 </div>
                                 <div className="analytics-card">
-                                    <h3>Produtos Ativos</h3>
-                                    <p>{products.filter(p => p.active).length}</p>
+                                    <h3>Status dos produtos</h3>
+                                    <PieChart width={200} height={200}>
+                                        <Pie
+                                            data={[
+                                                { name: 'Ativos', value: products.filter(p => p.active).length },
+                                                { name: 'Inativos', value: products.filter(p => !p.active).length }
+                                            ]}
+                                            cx="50%"
+                                            cy="50%"
+                                            outerRadius={60}
+                                            fill="#8884d8"
+                                            dataKey="value"
+                                            label
+                                        >
+                                            <Cell key="active" fill="#5dc585ff" />
+                                            <Cell key="inactive" fill="#ff6961" />
+                                        </Pie>
+                                        <Tooltip />
+                                    </PieChart>
                                 </div>
                                 <div className="analytics-card">
-                                    <h3>Produtos Inativos</h3>
-                                    <p>{products.filter(p => !p.active).length}</p>
+                                    <h3>Produtos em estoque</h3>
+                                    <PieChart width={200} height={200}>
+                                        <Pie
+                                            data={[
+                                                { name: 'Com Estoque', value: products.filter(p => p.stock > 0).length },
+                                                { name: 'Sem Estoque', value: products.filter(p => p.stock === 0).length }
+                                            ]}
+                                            cx="50%"
+                                            cy="50%"
+                                            outerRadius={60}
+                                            fill="#8884d8"
+                                            dataKey="value"
+                                            label
+                                        >
+                                            <Cell key="in-stock" fill="#4da6ff" />
+                                            <Cell key="out-of-stock" fill="#ffbf35ff" />
+                                        </Pie>
+                                        <Tooltip />
+                                    </PieChart>
+                                </div>
+                                <div className="analytics-card">
+                                    <h3>Categorias</h3>
+                                    <PieChart width={200} height={200}>
+                                        <Pie
+                                            data={(() => {
+                                                const categoryCounts = {};
+                                                products.forEach(p => {
+                                                    categoryCounts[p.category] = (categoryCounts[p.category] || 0) + 1;
+                                                });
+                                                return Object.entries(categoryCounts).map(([name, value]) => ({ name, value }));
+                                            })()}
+                                            cx="50%"
+                                            cy="50%"
+                                            outerRadius={60}
+                                            fill="#8884d8"
+                                            dataKey="value"
+                                            label
+                                        >
+                                            {(() => {
+                                                const colors = ['#ff9999', '#66b3ff', '#99ff99', '#ffcc99', '#c2c2f0', '#ffb3e6'];
+                                                return products.map((_, index) => (
+                                                    <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+                                                ));
+                                            })()}
+                                        </Pie>
+                                        <Tooltip />
+                                    </PieChart>
                                 </div>
                             </div>
 
                             <header className="section-header">
                                 <h2>Produtos</h2>
                                 <div className="actions">
-                                    <button className="add-product-button">
-                                        <FaPlus /> Adicionar Produto</button>
+                                    <Link to="/admin/products/new" className="add-product-button">
+                                        <FaPlus /> Adicionar Produto
+                                    </Link>
                                     <div className="input">
                                         <FaSearch />
                                         <input type="text" placeholder="Buscar produtos..." />

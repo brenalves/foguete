@@ -1,0 +1,147 @@
+.admin-new-product nav {
+    width: 100%;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #4a90e2;
+    padding: 0 1rem;
+    position: relative;
+}
+
+.admin-new-product nav .back-link {
+    color: white;
+    font-size: 1.5rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.admin-new-product nav .back-link:hover {
+    color: #affcd2;
+}
+
+.admin-new-product nav .title {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.admin-new-product main {
+    margin: 2rem 4rem;
+    border-radius: 8px;
+}
+
+.admin-new-product .fields {
+    display: flex;
+    justify-content: center;
+    gap: 8vw;
+}
+
+.admin-new-product .fields .form-group.file {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.admin-new-product .fields .form-group.file .preview {
+    width: 100%;
+    height: 300px;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+    background-color: #f9f9f9;
+    color: #999;
+    text-align: center;
+    padding: 1rem;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.admin-new-product .fields .form-group.file .preview img {
+    max-width: 400px;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 6px;
+}
+
+.admin-new-product .fields .form-group.file input {
+    display: none;
+}
+
+.admin-new-product .fields .form-group.file .fileLabel {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.admin-new-product .fields .form-group.file .fileLabel:hover {
+    background-color: #357ABD;
+}
+
+.admin-new-product .fields .form-group.file .fileLabel.delete {
+    background-color: #e74c3c;
+}
+
+.admin-new-product .fields .form-group.file .fileLabel.delete:hover {
+    background-color: #c0392b;
+}
+
+.admin-new-product .fields .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.admin-new-product .fields .form-group label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.admin-new-product .fields .form-group input,
+.admin-new-product .fields .form-group textarea,
+.admin-new-product .fields .form-group select {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: white;
+}
+
+.admin-new-product .fields .form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+    max-height: 180px;
+}
+
+.admin-new-product .button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.admin-new-product .button-wrapper .submit-button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.admin-new-product .button-wrapper .submit-button:hover {
+    background-color: #357ABD;
+}
